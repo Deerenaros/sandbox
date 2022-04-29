@@ -1,0 +1,63 @@
+version: "3.3"
+services:
+  traefik:
+    image: "traefik:v2.2.1"
+    container_name: traefik
+    hostname: traefik
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker
+      - --providers.docker.exposedByDefault=false
+      - --api
+      - --certificatesresolvers.le.acme.email=uvesnin@gmail.com
+      - --certificatesresolvers.le.acme.storage=./acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${PWD}/acme.json:/acme.json"
+    labels:
+      - "traefik.enable=true"
+      # global redirect to https
+      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+      # middleware redirect
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+    restart: unless-stopped
+    networks:
+      - traefik-public
+  my-app:
+    image: containous/whoami:v1.3.0
+    hostname: whoami
+    container_name: whoami
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.my-app.rule=Host(`whoami.vesn.tk`)"
+      - "traefik.http.routers.my-app.entrypoints=websecure"
+      - "traefik.http.routers.my-app.tls=true"
+      - "traefik.http.routers.my-app.tls.certresolver=le"
+    networks:
+      - traefik-public
+  sandbox:
+    image: deerenaros/sandbox
+    hostname: sandbox
+    container_name: sandbox
+    restart: unless-stopped
+    ports:
+      - "2222:22"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sandbox.rule=Host(`vesn.tk`)"
+      - "traefik.http.services.sandbox.loadbalancer.server.port=4200"
+      - "traefik.http.routers.sandbox.entrypoints=websecure"
+      - "traefik.http.routers.sandbox.tls=true"
+      - "traefik.http.routers.sandbox.tls.certresolver=le"
+    networks:
+      - traefik-public
+networks:
+  traefik-public:
