@@ -50,6 +50,7 @@ services:
     restart: unless-stopped
     ports:
       - "2222:22"
+      - "4200:4200"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sandbox.rule=Host(`vesn.tk`)"
