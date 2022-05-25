@@ -36,17 +36,19 @@ def get(token, key):
 @app.route("/api/<token>/list")
 def list(token):
     import re
+    import textwrap
 
     if token not in db:
         return {
             "success": "error",
             "error": "no such token registred"
         }
-    return f"""
+    sep = "\n            "
+    return textwrap.dedent(f"""
         <ul>
-            {"".join(f"<li><a href='/api/{token}/get/{k}>{re.sub('_', ' ', k)}</li>" for k in db[token].keys())}
+            {sep.join(f"<li><a href='/api/{token}/get/{k}>{re.sub('_', ' ', k)}</li>" for k in db[token].keys())}
         </ul>
-    """
+    """).strip()
 
 
 @app.route("/api/<token>/add", methods=["POST"])

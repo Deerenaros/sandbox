@@ -8,7 +8,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config && \
     groupadd guests && \
     useradd -ms /bin/bash -G sudo -g guests guest && \
-    echo "guest:lampfaceupthepockertable" | chpasswd && \
+    echo "guest:liquidcatonbatterythrust" | chpasswd && \
     ex +"%s/^%sudo.*$/%sudo ALL=(ALL:ALL) NOPASSWD:ALL/g" -scwq! /etc/sudoers
 RUN python3 -m pip install flask pandoc
 RUN mkdir /run/sshd
@@ -25,7 +25,3 @@ RUN rm Dockerfile docker-compose.yaml
 USER guest
 
 CMD ["docker-cmd"]
-
-# curl localhost:5000/api/token | jq -r .token
-# curl -X POST -d 'key=asdf&content=helloworld' localhost:5000/api/$(curl localhost:5000/api/token | jq -r .token)/add
-# curl -X POST -d 'key=ASDF&content=helloworld' localhost:5000/api/1JLJXIYHUXBYNQ1T/add
