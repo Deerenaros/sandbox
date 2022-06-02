@@ -17,3 +17,7 @@ Find duplicates of file wherever they are.
 ## DoD
 
 Any valid answer with obviously duplication definition
+
+## DoD+
+
+Print each group of dublicate files dividing them by hash with filesize in KiB

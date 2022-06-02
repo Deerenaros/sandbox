@@ -26,9 +26,13 @@ Any of thoose tools are applicable:
 
 If not livecoding it should be another (commited or built) container image with `solution.sh` script inside as entrypoint. The image can be stored at any kind.
 
+## DoD-
+
+Just fill with script server without converting markdown files.
+
 ## DoD
 
-Any valid answer if server filled with set of pages (given token would be enought).
+Any valid script if server filled with set of pages (given token would be enought).
 
 ## DoD+
 
