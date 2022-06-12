@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Login to Docker Registry
-      run: echo ${{ YANDEX_CLOUD_KEY }} | docker login cr.yandex --u oauth --password-stdin
+      run: echo ${{ secrets.YANDEX_CLOUD_KEY }} | docker login cr.yandex --u oauth --password-stdin
          
     - name: Build Image
       run: docker build . --file Dockerfile --tag cr.yandex/sandbox:latest
