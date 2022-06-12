@@ -15,10 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Login & Push to Docker Registry
+    - name: Login to Docker Registry
       run: docker login \
          --username oauth \
          --password ${{ secrets.YANDEX_CLOUD_KEY }} \
-         cr.yandex && \
-         docker build . --file Dockerfile --tag cr.yandex/sandbox:latest && \
-         docker push cr.yandex/sandbox:latest
+         cr.yandex
+         
+    - name: Build Image
+      run: docker build . --file Dockerfile --tag cr.yandex/sandbox:latest
+    
+    - name: Push to Registry
+      run: docker push cr.yandex/sandbox:latest
