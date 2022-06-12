@@ -44,7 +44,7 @@ services:
     networks:
       - traefik-public
   sandbox:
-    image: deerenaros/sandbox
+    image: deerenaros/sandbox:latest
     hostname: sandbox
     container_name: sandbox
     restart: unless-stopped
@@ -53,7 +53,7 @@ services:
       - "4200:4200"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sandbox.rule=Host(`vesn.tk`)"
+      - "traefik.http.routers.sandbox.rule=Host(`sandbox.vesn.tk/902a35fac53dee4e31c2bbda0942a67d`)"
       - "traefik.http.services.sandbox.loadbalancer.server.port=4200"
       - "traefik.http.routers.sandbox.entrypoints=websecure"
       - "traefik.http.routers.sandbox.tls=true"

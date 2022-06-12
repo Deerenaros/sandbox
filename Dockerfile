@@ -24,6 +24,7 @@ RUN cd dublicates && ./generate.sh && rm -rf ./generate.sh
 RUN mv ./docker-cmd.sh /bin/docker-cmd && chmod 755 /bin/docker-cmd && chown -R guest:guests ./*
 RUN rm Dockerfile docker-compose.yaml
 RUN git clone https://github.com/mbcrawfo/GenericMakefile.git makefiles
+RUN cd /usr/bin/ && wget https://github.com/tsl0922/ttyd/releases/download/1.6.3/ttyd.x86_64 && mv ttyd.x86_64 ttyd && chmod +x ttyd
 USER guest
 
 CMD ["docker-cmd"]
