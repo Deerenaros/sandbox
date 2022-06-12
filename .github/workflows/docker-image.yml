@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Login & Push to Docker Registry
+      run: docker login \
+         --username oauth \
+         --password ${{ secrets.YANDEX_CLOUD_KEY }} \
+         cr.yandex && \
+         docker build . --file Dockerfile --tag cr.yandex/sandbox:latest && \
+         docker push cr.yandex/sandbox:latest
