@@ -19,7 +19,7 @@ jobs:
       run: echo ${{ secrets.YANDEX_CLOUD_KEY }} | docker login cr.yandex -u oauth --password-stdin
          
     - name: Build Image
-      run: docker build . --file Dockerfile --tag cr.yandex/sandbox:latest
+      run: docker build . --file Dockerfile --tag cr.yandex/crpkcudcrt76dcvr9ke2/sandbox:latest
     
     - name: Push to Registry
-      run: docker push cr.yandex/sandbox:latest
+      run: docker push cr.yandex/crpkcudcrt76dcvr9ke2/sandbox:latest
